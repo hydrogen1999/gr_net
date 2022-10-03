@@ -1,0 +1,144 @@
+version: '2'
+
+volumes:
+  orderer.grooo.com:
+  peer0.grooo1.com:
+  peer1.grooo1.com:
+  peer2.grooo1.com:
+  peer0.grooo2.com:
+  peer1.grooo2.com:
+  peer2.grooo2.com:
+  peer0.grooo3.com:
+  peer1.grooo3.com:
+  peer2.grooo3.com:
+
+networks:
+  grooo-network:
+services:
+  ca1:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-grooo1
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.grooo1.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/ec3fc17373c9733aeda3013738dde76844be4ad16535080ec2469fed74c558cd_sk
+    ports:
+      - "7054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.grooo1.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/ec3fc17373c9733aeda3013738dde76844be4ad16535080ec2469fed74c558cd_sk -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/grooo1.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerGrooo1
+    networks:
+      - grooo-network
+
+  ca2:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-grooo2
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.grooo2.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/93d19cde72fb5e57dbf84879bf3818d701324552f29ebb7c5c02d20cf3cf33ad_sk
+    ports:
+      - "8054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.grooo2.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/93d19cde72fb5e57dbf84879bf3818d701324552f29ebb7c5c02d20cf3cf33ad_sk -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/grooo2.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerGrooo2
+    networks:
+      - grooo-network
+  
+  ca3:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-grooo3
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.grooo3.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/42e550dfb9cde2ba184b707f3207465f326a1bf69421c6e8b88a9293d495d5e0_sk
+    ports:
+      - "8054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.grooo3.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/42e550dfb9cde2ba184b707f3207465f326a1bf69421c6e8b88a9293d495d5e0_sk -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/grooo3.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerGrooo3
+    networks:
+      - grooo-network
+
+  orderer.grooo.com:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer.grooo.com
+    container_name: orderer.grooo.com
+    networks:
+      - grooo-network
+
+  peer0.grooo1.com:
+    container_name: peer0.grooo1.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.grooo1.com
+    networks:
+      - grooo-network
+
+  peer1.grooo1.com:
+    container_name: peer1.grooo1.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.grooo1.com
+    networks:
+      - grooo-network
+  peer2.grooo1.com:
+    container_name: peer2.grooo1.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer2.grooo1.com
+    networks:
+      - grooo-network
+
+  peer0.grooo2.com:
+    container_name: peer0.grooo2.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.grooo2.com
+    networks:
+      - grooo-network
+
+  peer1.grooo2.com:
+    container_name: peer1.grooo2.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.grooo2.com
+    networks:
+      - grooo-network
+  peer2.grooo2.com:
+    container_name: peer2.grooo2.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer2.grooo2.com
+    networks:
+      - grooo-network
+  
+  peer0.grooo3.com:
+    container_name: peer0.grooo3.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.grooo3.com
+    networks:
+      - grooo-network
+
+  peer1.grooo3.com:
+    container_name: peer1.grooo3.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.grooo3.com
+    networks:
+      - grooo-network
+  peer2.grooo3.com:
+    container_name: peer2.grooo3.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer2.grooo3.com
+    networks:
+      - grooo-network

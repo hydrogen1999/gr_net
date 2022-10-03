@@ -1,0 +1,307 @@
+
+Organizations:
+    - &OrdererOrg
+        Name: OrdererOrg
+        ID: OrdererMSP
+        MSPDir: crypto-config/ordererOrganizations/grooo.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('OrdererMSP.admin')"
+
+    - &Org1
+        Name: Grooo1MSP
+        ID: Grooo1MSP
+        MSPDir: crypto-config/peerOrganizations/grooo1.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('Grooo1MSP.admin', 'Grooo1MSP.peer', 'Grooo1MSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('Grooo1MSP.admin', 'Grooo1MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('Grooo1MSP.admin')"
+
+        AnchorPeers:
+            - Host: peer0.grooo1.com
+              Port: 7051
+
+    - &Org2
+        Name: Grooo2MSP
+        ID: Grooo2MSP
+        MSPDir: crypto-config/peerOrganizations/grooo2.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('Grooo2MSP.admin', 'Grooo2MSP.peer', 'Grooo2MSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('Grooo2MSP.admin', 'Grooo2MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('Grooo2MSP.admin')"
+
+        AnchorPeers:
+            - Host: peer0.grooo2.com
+              Port: 9051
+    - &Org3
+        Name: Grooo3MSP
+        ID: Grooo3MSP
+        MSPDir: crypto-config/peerOrganizations/grooo3.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('Grooo3MSP.admin', 'Grooo3MSP.peer', 'Grooo3MSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('Grooo3MSP.admin', 'Grooo3MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('Grooo3MSP.admin')"
+
+        AnchorPeers:
+            - Host: peer0.grooo3.com
+              Port: 9051
+
+Capabilities:
+    Channel: &ChannelCapabilities
+        V1_4_3: true
+        V1_3: false
+        V1_1: false
+
+    Orderer: &OrdererCapabilities
+        V1_4_2: true
+        V1_1: false
+    Application: &ApplicationCapabilities
+        V1_4_2: true
+        V1_3: false
+        V1_2: false
+        V1_1: false
+
+
+Application: &ApplicationDefaults
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+
+    Capabilities:
+        <<: *ApplicationCapabilities
+Orderer: &OrdererDefaults
+    OrdererType: solo
+
+    Addresses:
+        - orderer.grooo.com:7050
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+
+    Kafka:
+        Brokers:
+            - 127.0.0.1:9092
+    EtcdRaft:
+        Consenters:
+            - Host: orderer.grooo.com
+              Port: 7050
+              ClientTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer.grooo.com/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer.grooo.com/tls/server.crt
+            - Host: orderer2.grooo.com
+              Port: 7050
+              ClientTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer2.grooo.com/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer2.grooo.com/tls/server.crt
+            - Host: orderer3.grooo.com
+              Port: 7050
+              ClientTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer3.grooo.com/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer3.grooo.com/tls/server.crt
+            - Host: orderer4.grooo.com
+              Port: 7050
+              ClientTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer4.grooo.com/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer4.grooo.com/tls/server.crt
+            - Host: orderer5.grooo.com
+              Port: 7050
+              ClientTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer5.grooo.com/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer5.grooo.com/tls/server.crt
+
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        BlockValidation:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+Channel: &ChannelDefaults
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+    Capabilities:
+        <<: *ChannelCapabilities
+
+Profiles:
+
+    OrdererGenesis:
+        <<: *ChannelDefaults
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                    - *Org1
+                    - *Org2
+                    - *Org3
+    ChannelOne:
+        Consortium: SampleConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Org1
+                - *Org2
+                - *Org3
+            Capabilities:
+                <<: *ApplicationCapabilities
+
+    ChannelTwo:
+        Consortium: SampleConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Org1
+                - *Org2
+            Capabilities:
+                <<: *ApplicationCapabilities
+
+    ChannelThree:
+        Consortium: SampleConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Org2
+                - *Org3
+            Capabilities:
+                <<: *ApplicationCapabilities
+
+    ChannelFour:
+        Consortium: SampleConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Org1
+                - *Org3
+            Capabilities:
+                <<: *ApplicationCapabilities
+
+    SampleDevModeKafka:
+        <<: *ChannelDefaults
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            OrdererType: kafka
+            Kafka:
+                Brokers:
+                - kafka.grooo.com:9092
+
+            Organizations:
+            - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+            - <<: *OrdererOrg
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                - *Org1
+                - *Org2
+                - *Org3
+
+    SampleMultiNodeEtcdRaft:
+        <<: *ChannelDefaults
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            OrdererType: etcdraft
+            EtcdRaft:
+                Consenters:
+                - Host: orderer.grooo.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer.grooo.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer.grooo.com/tls/server.crt
+                - Host: orderer2.grooo.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer2.grooo.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer2.grooo.com/tls/server.crt
+                - Host: orderer3.grooo.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer3.grooo.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer3.grooo.com/tls/server.crt
+                - Host: orderer4.grooo.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer4.grooo.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer4.grooo.com/tls/server.crt
+                - Host: orderer5.grooo.com
+                  Port: 7050
+                  ClientTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer5.grooo.com/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/grooo.com/orderers/orderer5.grooo.com/tls/server.crt
+
+            Addresses:
+                - orderer.grooo.com:7050
+                - orderer2.grooo.com:7050
+                - orderer3.grooo.com:7050
+                - orderer4.grooo.com:7050
+                - orderer5.grooo.com:7050
+
+            Organizations:
+            - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+            - <<: *OrdererOrg
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                - *Org1
+                - *Org2
+                - *Org3

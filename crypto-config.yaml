@@ -1,0 +1,33 @@
+OrdererOrgs:
+  - Name: Orderer
+    Domain: grooo.com
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: orderer
+      - Hostname: orderer2
+      - Hostname: orderer3
+      - Hostname: orderer4
+      - Hostname: orderer5
+
+PeerOrgs:
+  - Name: Grooo1
+    Domain: grooo1.com
+    EnableNodeOUs: true
+    Template:
+      Count: 3
+    Users:
+      Count: 1
+  - Name: Grooo2
+    Domain: grooo2.com
+    EnableNodeOUs: true
+    Template:
+      Count: 3
+    Users:
+      Count: 1
+  - Name: Grooo3
+    Domain: grooo3.com
+    EnableNodeOUs: true
+    Template:
+      Count: 3
+    Users:
+      Count: 1

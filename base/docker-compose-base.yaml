@@ -1,0 +1,220 @@
+version: '2'
+
+services:
+
+  orderer.grooo.com:
+    container_name: orderer.grooo.com
+    extends:
+      file: peer-base.yaml
+      service: orderer-base
+    volumes:
+        - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+        - ../crypto-config/ordererOrganizations/grooo.com/orderers/orderer.grooo.com/msp:/var/hyperledger/orderer/msp
+        - ../crypto-config/ordererOrganizations/grooo.com/orderers/orderer.grooo.com/tls/:/var/hyperledger/orderer/tls
+        - orderer.grooo.com:/var/hyperledger/production/orderer
+    ports:
+      - 7050:7050
+# GROOO1
+  peer0.grooo1.com:
+    container_name: peer0.grooo1.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.grooo1.com
+      - CORE_PEER_ADDRESS=peer0.grooo1.com:7051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.grooo1.com:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_GOSSIP_BOOTSTRAP="peer1.grooo1.com:8051 peer2.grooo1.com:9051"
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.grooo1.com:7051
+      - CORE_PEER_LOCALMSPID=Grooo1MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/grooo1.com/peers/peer0.grooo1.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/grooo1.com/peers/peer0.grooo1.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.grooo1.com:/var/hyperledger/production
+    ports:
+      - 7051:7051
+
+  peer1.grooo1.com:
+    container_name: peer1.grooo1.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.grooo1.com
+      - CORE_PEER_ADDRESS=peer1.grooo1.com:8051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
+      - CORE_PEER_CHAINCODEADDRESS=peer1.grooo1.com:8052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.grooo1.com:8051
+      - CORE_PEER_GOSSIP_BOOTSTRAP="peer0.grooo1.com:7051 peer2.grooo1.com:9051"
+      - CORE_PEER_LOCALMSPID=Grooo1MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/grooo1.com/peers/peer1.grooo1.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/grooo1.com/peers/peer1.grooo1.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.grooo1.com:/var/hyperledger/production
+
+    ports:
+      - 8051:8051
+  
+  peer2.grooo1.com:
+    container_name: peer1.grooo1.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer2.grooo1.com
+      - CORE_PEER_ADDRESS=peer2.grooo1.com:9051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
+      - CORE_PEER_CHAINCODEADDRESS=peer2.grooo1.com:9052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.grooo1.com:9051
+      - CORE_PEER_GOSSIP_BOOTSTRAP="peer0.grooo1.com:7051 peer1.grooo1.com:8051"
+      - CORE_PEER_LOCALMSPID=Grooo1MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/grooo1.com/peers/peer2.grooo1.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/grooo1.com/peers/peer2.grooo1.com/tls:/etc/hyperledger/fabric/tls
+        - peer2.grooo1.com:/var/hyperledger/production
+
+    ports:
+      - 9051:9051
+
+# GROOO2
+  peer0.grooo2.com:
+    container_name: peer0.grooo2.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.grooo2.com
+      - CORE_PEER_ADDRESS=peer0.grooo2.com:10051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:10051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.grooo2.com:10052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.grooo2.com:10051
+      - CORE_PEER_GOSSIP_BOOTSTRAP="peer1.grooo2.com:11051 peer2.grooo2.com:12051"
+      - CORE_PEER_LOCALMSPID=Grooo2MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/grooo2.com/peers/peer0.grooo2.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/grooo2.com/peers/peer0.grooo2.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.grooo2.com:/var/hyperledger/production
+    ports:
+      - 10051:10051
+
+  peer1.grooo2.com:
+    container_name: peer1.grooo2.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.grooo2.com
+      - CORE_PEER_ADDRESS=peer1.grooo2.com:11051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:11051
+      - CORE_PEER_CHAINCODEADDRESS=peer1.grooo2.com:11051
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:11051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.grooo2.com:11051
+      - CORE_PEER_GOSSIP_BOOTSTRAP="peer0.grooo2.com:10051 peer2.grooo2.com:12051"
+      - CORE_PEER_LOCALMSPID=Grooo2MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/grooo2.com/peers/peer1.grooo2.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/grooo2.com/peers/peer1.grooo2.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.grooo2.com:/var/hyperledger/production
+    ports:
+      - 11051:11051
+    
+  peer2.grooo2.com:
+    container_name: peer2.grooo2.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.grooo1.com
+      - CORE_PEER_ADDRESS=peer1.grooo1.com:12051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:12051
+      - CORE_PEER_CHAINCODEADDRESS=peer1.grooo1.com:12051
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:12051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.grooo1.com:12051
+      - CORE_PEER_GOSSIP_BOOTSTRAP="peer0.grooo2.com:10051 peer1.grooo2.com:11051"
+      - CORE_PEER_LOCALMSPID=Grooo2MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/grooo2.com/peers/peer2.grooo2.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/grooo2.com/peers/peer2.grooo2.com/tls:/etc/hyperledger/fabric/tls
+        - peer2.grooo2.com:/var/hyperledger/production
+
+    ports:
+      - 12051:12051
+
+# grooo3
+  peer0.grooo3.com:
+    container_name: peer0.grooo3.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.grooo3.com
+      - CORE_PEER_ADDRESS=peer0.grooo3.com:13051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:13051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.grooo3.com:10052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.grooo3.com:13051
+      - CORE_PEER_GOSSIP_BOOTSTRAP="peer1.grooo3.com:14051 peer2.grooo3.com:15051"
+      - CORE_PEER_LOCALMSPID=Grooo3MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/grooo3.com/peers/peer0.grooo3.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/grooo3.com/peers/peer0.grooo3.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.grooo3.com:/var/hyperledger/production
+    ports:
+      - 13051:13051
+
+  peer1.grooo3.com:
+    container_name: peer1.grooo3.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.grooo3.com
+      - CORE_PEER_ADDRESS=peer1.grooo3.com:14051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:14051
+      - CORE_PEER_CHAINCODEADDRESS=peer1.grooo3.com:14051
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:14051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.grooo3.com:14051
+      - CORE_PEER_GOSSIP_BOOTSTRAP="peer0.grooo3.com:13051 peer2.grooo3.com:15051"
+      - CORE_PEER_LOCALMSPID=Grooo3MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/grooo3.com/peers/peer1.grooo3.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/grooo3.com/peers/peer1.grooo3.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.grooo3.com:/var/hyperledger/production
+    ports:
+      - 14051:14051
+    
+  peer2.grooo3.com:
+    container_name: peer2.grooo3.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer2.grooo3.com
+      - CORE_PEER_ADDRESS=peer2.grooo3.com:15051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:15051
+      - CORE_PEER_CHAINCODEADDRESS=peer2.grooo3.com:15051
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:15051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.grooo3.com:15051
+      - CORE_PEER_GOSSIP_BOOTSTRAP="peer0.grooo3.com:13051 peer1.grooo3.com:14051"
+      - CORE_PEER_LOCALMSPID=Grooo3MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/grooo3.com/peers/peer2.grooo3.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/grooo3.com/peers/peer2.grooo3.com/tls:/etc/hyperledger/fabric/tls
+        - peer2.grooo3.com:/var/hyperledger/production
+
+    ports:
+      - 15051:15051

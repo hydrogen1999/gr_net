@@ -1,0 +1,143 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+volumes:
+  orderer.grooo.com:
+  peer0.grooo1.com:
+  peer1.grooo1.com:
+  peer2.grooo1.com:
+  peer0.grooo2.com:
+  peer1.grooo2.com:
+  peer2.grooo2.com:
+  peer0.grooo3.com:
+  peer1.grooo3.com:
+  peer2.grooo3.com:
+
+networks:
+  grooo-network:
+
+services:
+
+  orderer.grooo.com:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer.grooo.com
+    container_name: orderer.grooo.com
+    networks:
+      - grooo-network
+
+  peer0.grooo1.com:
+    container_name: peer0.grooo1.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.grooo1.com
+    networks:
+      - grooo-network
+
+  peer1.grooo1.com:
+    container_name: peer1.grooo1.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.grooo1.com
+    networks:
+      - grooo-network
+  peer2.grooo1.com:
+    container_name: peer2.grooo1.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer2.grooo1.com
+    networks:
+      - grooo-network
+
+  peer0.grooo2.com:
+    container_name: peer0.grooo2.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.grooo2.com
+    networks:
+      - grooo-network
+
+  peer1.grooo2.com:
+    container_name: peer1.grooo2.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.grooo2.com
+    networks:
+      - grooo-network
+  peer2.grooo2.com:
+    container_name: peer2.grooo2.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer2.grooo2.com
+    networks:
+      - grooo-network
+
+  
+  peer0.grooo3.com:
+    container_name: peer0.grooo3.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.grooo3.com
+    networks:
+      - grooo-network
+
+  peer1.grooo3.com:
+    container_name: peer1.grooo3.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.grooo3.com
+    networks:
+      - grooo-network
+  peer2.grooo3.com:
+    container_name: peer2.grooo3.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer2.grooo3.com
+    networks:
+      - grooo-network
+
+  cli:
+    container_name: cli
+    image: hyperledger/fabric-tools:2.3.0
+    tty: true
+    stdin_open: true
+    environment:
+      - SYS_CHANNEL=$SYS_CHANNEL
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - FABRIC_LOGGING_SPEC=INFO
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.grooo1.com:7051
+      - CORE_PEER_LOCALMSPID=Grooo1MSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/grooo1.com/peers/peer0.grooo1.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/grooo1.com/peers/peer0.grooo1.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/grooo1.com/peers/peer0.grooo1.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/grooo1.com/users/Admin@grooo1.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash    
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./../chaincode/:/opt/gopath/src/github.com/chaincode
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+        - ./../../fabric-chaincode-evm:/opt/gopath/src/github.com/hyperledger/fabric-chaincode-evm
+    depends_on:
+      - orderer.grooo.com
+      - peer0.grooo1.com
+      - peer1.grooo1.com
+      - peer2.grooo1.com
+      - peer0.grooo2.com
+      - peer1.grooo2.com
+      - peer2.grooo2.com
+      - peer0.grooo3.com
+      - peer1.grooo3.com
+      - peer2.grooo3.com
+    networks:
+      - grooo-network
