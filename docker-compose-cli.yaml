@@ -102,7 +102,7 @@ services:
 
   cli:
     container_name: cli
-    image: hyperledger/fabric-tools:2.3.0
+    image: hyperledger/fabric-tools:2.4.0
     tty: true
     stdin_open: true
     environment:
