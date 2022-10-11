@@ -51,14 +51,12 @@ CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypt
 CORE_PEER_ADDRESS=peer0.grooo2.com:10051
 CORE_PEER_LOCALMSPID="Grooo2MSP"
 CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/grooo2.com/peers/peer0.grooo2.com/tls/ca.crt
-peer channel update -o orderer.grooo.com:7050 -c generalchannel -f ./channel-artifacts/general_Grooo2MSPanchors.tx
 peer channel update -o orderer.grooo.com:7050 -c generalchannel -f ./channel-artifacts/general_Grooo2MSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/grooo.com/orderers/orderer.grooo.com/msp/tlscacerts/tlsca.grooo.com-cert.pem
 
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/grooo3.com/users/Admin@grooo3.com/msp
 CORE_PEER_ADDRESS=peer0.grooo3.com:13051
 CORE_PEER_LOCALMSPID="Grooo3MSP"
 CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/grooo3.com/peers/peer0.grooo3.com/tls/ca.crt
-peer channel update -o orderer.grooo.com:7050 -c generalchannel -f ./channel-artifacts/general_Grooo3MSPanchors.tx
 peer channel update -o orderer.grooo.com:7050 -c generalchannel -f ./channel-artifacts/general_Grooo3MSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/grooo.com/orderers/orderer.grooo.com/msp/tlscacerts/tlsca.grooo.com-cert.pem
 
 -----INSTALL CHAINCODE-------
@@ -85,9 +83,15 @@ peer chaincode install -n mycc -v 1.0 -p ./chaincode/
 -----INSTANTIATE CHAINCODE-----
 export ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/grooo.com/orderers/orderer.grooo.com/msp/tlscacerts/tlsca.grooo.com-cert.pem
 
-peer chaincode instantiate -o orderer.grooo.com:7050 --tls --cafile $ORDERER_CA -C generalchannel -n mycc -v 2.0 -c {"Args":[]}' -P 'AND('\''Grooo1MSP.member'\'','\''Grooo2MSP.member'\'','\''Grooo3MSP.member'\'')' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/grooo.com/orderers/orderer.grooo.com/msp/tlscacerts/tlsca.grooo.com-cert.pem --peerAddresses peer0.grooo1.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/grooo1.com/peers/peer0.grooo1.com/tls/ca.crt
+peer chaincode instantiate -o orderer.grooo.com:7050 --tls --cafile $ORDERER_CA -C generalchannel -n mycc -v 1.0 -c '{"Args":[]}' -P 'AND('\''Grooo1MSP.member'\'','\''Grooo2MSP.member'\'','\''Grooo3MSP.member'\'')' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/grooo.com/orderers/orderer.grooo.com/msp/tlscacerts/tlsca.grooo.com-cert.pem --peerAddresses peer0.grooo1.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/grooo1.com/peers/peer0.grooo1.com/tls/ca.crt
 
 
 peer chaincode instantiate -o orderer.grooo.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/grooo.com/orderers/orderer.grooo.com/msp/tlscacerts/tlsca.grooo.com-cert.pem -C generalchannel -n mycc -v 1.0 -c '{"Args":["init","a", "100", "b","200"]}' -P "AND ('Grooo1MSP.peer','Grooo2MSP.peer','Grooo3MSP.peer')"
 
-docker exec -e CORE_PEER_LOCALMSPID=Grooo1MSP -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/grooo1.com/users/Admin@grooo1.com/msp cli peer chaincode instantiate -o orderer.grooo.com:7050 -C generalchannel -n mycc -l node -v 2.0 -c '{"Args":[]}' -P 'AND('\''Grooo1MSP.member'\'','\''Grooo2MSP.member'\'','\''Grooo3MSP.member'\'')' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/grooo.com/orderers/orderer.grooo.com/msp/tlscacerts/tlsca.grooo.com-cert.pem --peerAddresses peer0.grooo1.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/grooo1.com/peers/peer0.grooo1.com/tls/ca.crt
+docker exec -e CORE_PEER_LOCALMSPID=Grooo1MSP -e CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/grooo1.com/users/Admin@grooo1.com/msp cli peer chaincode instantiate -o orderer.grooo.com:7050 -C generalchannel -n mycc -l node -v 1.0 -c '{"Args":[]}' -P 'AND('\''Grooo1MSP.member'\'','\''Grooo2MSP.member'\'','\''Grooo3MSP.member'\'')' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/grooo.com/orderers/orderer.grooo.com/msp/tlscacerts/tlsca.grooo.com-cert.pem --peerAddresses peer0.grooo1.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/grooo1.com/peers/peer0.grooo1.com/tls/ca.crt
+
+peer chaincode instantiate -o orderer.grooo.com:7050 --tls --cafile ./opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/grooo.com/orderers/orderer.grooo.com/msp/tlscacerts/tlsca.grooo.com-cert.pem -C generalchannel -n mycc -v 1.0 -c '{"Args":["init","a", "100", "b","200"]}' -P "AND ('Grooo1MSP.peer','Grooo2MSP.peer')"
+
+CORE_PEER_ADDRESS=peer0.grooo1.com:7051 peer chaincode instantiate -o orderer.grooo.com:7050 -C generalchannel -n mycc -p ./chaincode/ -v 1.0 -c '{"Args":["init","a","100","b","200"]}'
+
+peer chaincode instantiate -o orderer.grooo.com:7050 -C generalchannel -n mycc -v 1.0 -c '{"Args":[]}' -P "OR ('Grooo1.member','Grooo2.member')"
