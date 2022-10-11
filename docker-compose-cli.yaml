@@ -115,6 +115,7 @@ services:
       - CORE_PEER_ADDRESS=peer0.grooo1.com:7051
       - CORE_PEER_LOCALMSPID=Grooo1MSP
       - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_ADDRESSAUTODETECT=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/grooo1.com/peers/peer0.grooo1.com/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/grooo1.com/peers/peer0.grooo1.com/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/grooo1.com/peers/peer0.grooo1.com/tls/ca.crt
@@ -141,3 +142,4 @@ services:
       - peer2.grooo3.com
     networks:
       - grooo-network
+
