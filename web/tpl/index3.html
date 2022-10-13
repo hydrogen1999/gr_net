@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="cn" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title>Truy xuất nguồn gốc</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="/static/css/reset.css" rel="stylesheet">
+    <!-- Bootstrap3.3.5 CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="h_m_l main">
+        
+        <h2>HỆ THỐNG TRUY XUẤT NGUỒN GỐC THỰC PHẨM</h2>
+        {{if .Flag}}
+            <h6>Người dùng hiện tại：{{ .CurrentUser.LoginName }}</h6>
+        {{end}}
+        <div class="h_m_div3">
+            <div class="h_m_div3_t">
+                <h3 class="i01"><a href="/help">Tiêu chí truy xuất</a></h3>
+                Các tiêu chí truy xuất nguồn gốc sản phẩm</div>
+            <ul class="h_m_div3_ul clearfix">
+                <li><span class="fontBold color333">Yêu cầu</span><br>
+                    <a href="javascript:void(0);">Thành phần</a><br>
+                    <a href="javascript:void(0);">Nhà cung cấp</a><br>
+                    <a href="javascript:void(0);">Hình ảnh</a></li>
+                </ul>
+            <div class="h_m_div3_b"><a href="javascript:void(0);">Xác minh trực tuyến</a>　|　<a href="javascript:void(0);">Truy xuất nguồn gốc</a></div>
+        </div>
+        <div class="h_m_div3">
+            <div class="h_m_div3_t">
+                <h3 class="i02"><a href="/queryPage">Truy xuất nguồn gốc</a></h3>
+                 Xác minh trực tuyến dựa trên tên sản phẩm hoặc mã sản phẩm để truy xuất nguồn gốc sản phẩm.</div>
+            <ul class="h_m_div3_ul clearfix">
+                <li><span class="fontBold color333">Truy xuất nguồn gốc theo:</span><br><br>
+                    <a href="/queryPage">1. Tên sản phẩm</a><br>
+                    &nbsp;
+                    &nbsp;
+                    &nbsp; </li>
+                <li><span class="fontBold color333"></span><br><br>
+                    <a href="/queryPage2">2. Mã sản phẩm</a></li>
+            </ul>
+            <div class="h_m_div3_b"><a href="javascript:void(0);">Giới thiệu</a>　|　<a  href="/loginout">Đăng nhập</a></div>
+        </div>
+    </div>
+  </body>
+  <!-- jQuery1.11.3 (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="/static/js/jquery.min.js "></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="/static/js/bootstrap.min.js "></script>
+  <script type="text/javascript">
+    $(function() {
+      // index
+    })
+  </script>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="vi" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Thêm thông tin</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="./css/reset.css" rel="stylesheet">
+    <!-- Bootstrap3.3.5 CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/login.css" rel="stylesheet">
+    <link href="/static/css/queryResult.css" rel="stylesheet">
+    <link href="/static/css/addEdu.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>AgriTrace</title>
+    <link rel = "icon" href ="/static/images/logo.png" type = "image/x-icon">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bangers&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+JP&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap">
+    <link rel="stylesheet" href="/static/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/static/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
+    <link rel="stylesheet" href="/static/css/Login-Form-Clean.css">
+    <link rel="stylesheet" href="/static/css/Login-Form-Dark.css">
+    <link rel="stylesheet" href="/static/css/Pretty-Footer.css">
+    <link rel="stylesheet" href="/static/css/Registration-Form-with-Photo.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox-plus-jquery.min.js"></script>
+</head>
+<body >
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="box-shadow: 0px 0px 20px 9px;">
+        <div class="container">
+            <div class="navbar-header"><a class="navbar-brand" href="index.html"
+                    style="font-family: Raleway, sans-serif;background: rgb(251,252,252);border-radius: 14px;"><img
+                        class="img-circle" id="logo" src="/static/images/logo.png"><strong>Agri</strong>Trace</a><button
+                    data-toggle="collapse" class="navbar-toggle collapsed" data-target="#navcol-1"><span
+                        class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
+                        class="icon-bar"></span><span class="icon-bar"></span></button></div>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active" style="font-family: Montserrat, sans-serif;"><a href="index.html"
+                            style="background: rgba(245,245,130,0);">Trang chủ</a></li>
+                    <li style="font-family: Montserrat, sans-serif;"><a href="/queryPage2">Truy xuất</a></li>
+                    {{if eq .CurrentUser.IsAdmin "T"}}
+                    <li><a href="#" style="font-family: Montserrat, sans-serif;">Thêm sản phẩm</a></li>
+                    {{end}}
+                    {{if .CurrentUser.LoginName}}
+                    <li><a href="/loginout" style="font-family: Montserrat, sans-serif;background: rgb(91,192,222);border-radius: 5px;color: rgb(251,249,249);"><b>{{.CurrentUser.LoginName}}</b></a></li>
+                    {{else}}
+                    <li><a href="/loginout"
+                        style="font-family: Montserrat, sans-serif;background: rgb(91,192,222);border-radius: 5px;color: rgb(251,249,249);">Đăng
+                        nhập</a></li>
+                    {{end}}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container" style="margin-top: 95px;">
+        <div>
+            <h1 class="text-uppercase"
+                style="color: #234435;font-size: 36px;text-align: center;font-family: Raleway, sans-serif;">Thêm sản phẩm</h1>
+                <br><br>
+        </div>
+    </div><!-- Start: 1 Row 3 Columns -->
+<div class="container">
+    <br><br>
+    <div class="queryResule">
+        <form action="/addEdu" method="post" name="addForm">
+          <div class="top">
+              <div class="left">
+                  <p>
+                      <span>Loại sản phẩm：</span>
+                      <span>
+                        <input type="text" name="docType" class="input_text" tabindex="1" onfocus="if(this.placeholder=='Loại sản phẩm'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='Loại sản phẩm';this.className ='input_text'}" accesskey="n" type="text" placeholder="Loại sản phẩm" size="25" autocomplete="off">
+                      </span>
+                  </p>
+                  <p>
+                      <span>Mã sản phẩm：</span>
+                      <span>
+                        <input type="text" name="primarykey" class="input_text" tabindex="1" onfocus="if(this.placeholder=='Mã sản phẩm'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='Mã sản phẩm';this.className ='input_text'}" accesskey="n" type="text" placeholder="Mã sản phẩm" size="25" autocomplete="off">
+                      </span>
+                  </p>
+                  <p>
+                      <span>Tên sản phẩm：</span>
+                      <span>
+                        <input type="text" name="name" class="input_text" tabindex="1" onfocus="if(this.placeholder=='Tên sản phẩm'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='Tên sản phẩm';this.className ='input_text'}" accesskey="n" type="text" placeholder="Tên sản phẩm" size="25" autocomplete="off">
+                      </span>
+                  </p>
+                  <p>
+                      <span>Nhãn hiệu：</span>
+                      <span>
+                        <input type="text" name="brand" class="input_text" tabindex="1" onfocus="if(this.placeholder=='Nhãn hiệu'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='Nhãn hiệu';this.className ='input_text'}" accesskey="n" type="text" placeholder="Nhãn hiệu" size="25" autocomplete="off" placeholder="">
+                      </span>
+                  </p>
+                  <p>
+                      <span>Mô tả：</span>
+                      <span>
+                        <input type="text" name="des" class="input_text" tabindex="1" onfocus="if(this.placeholder=='Mô tả'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='Mô tả';this.className ='input_text'}" accesskey="n" type="text" placeholder="Mô tả" size="25" autocomplete="off">
+                      </span>
+                  </p>
+                  <p>
+                      <span>Thông số：</span>
+                      <span>
+                        <input type="text" name="specification" class="input_text" tabindex="1" onfocus="if(this.placeholder=='Thông số'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='Thông số';this.className ='input_text'}" accesskey="n" type="text" placeholder="Thông số" size="25" autocomplete="off">
+                      </span>
+                  </p>
+                  <p>
+                      <span>Nguồn：</span>
+                      <span>
+                        <input type="text" name="source" class="input_text" tabindex="1" onfocus="if(this.placeholder=='Nguồn'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='Nguồn';this.className ='input_text'}" accesskey="n" type="text" placeholder="Nguồn" size="25" autocomplete="off">
+                      </span>
+                  </p>
+                  <p>
+                      <span>Xử lý：</span>
+                      <span>
+                        <input type="text" name="machining" class="input_text" tabindex="1" onfocus="if(this.placeholder=='Phương pháp xử lý'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='Phương pháp xử lý';this.className ='input_text'}" accesskey="n" type="text" placeholder="Phương pháp xử lý" size="25" autocomplete="off">
+                      </span>
+                  </p>
+              </div>
+              <div class="right">
+                  <p>
+                      <span>Ghi chú：</span>
+                      <span>
+                        <input type="text" name="remarks" class="input_text" tabindex="1" onfocus="if(this.placeholder=='Ghi chú'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='Ghi chú';this.className ='input_text'}" accesskey="n" type="text" placeholder="Ghi chú" size="25" autocomplete="off">
+                      </span>
+                  </p>
+                  <p>
+                      <span>Chủ sở hữu：</span>
+                      <span>
+                        <input type="text" name="principal" class="input_text" tabindex="1" onfocus="if(this.placeholder=='Chủ sở hữu'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='Chủ sở hữu';this.className ='input_text'}" accesskey="n" type="text" placeholder="Chủ sở hữu" size="25" autocomplete="off">
+                      </span>
+                  </p>
+                  <p>
+                      <span>Điện thoại：</span>
+                      <span>
+                        <input type="text" name="phoneNumber" class="input_text" tabindex="1" onfocus="if(this.placeholder=='Điện thoại'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='Điện thoại';this.className ='input_text'}" accesskey="n" type="text" placeholder="Điện thoại" size="25" autocomplete="off">
+                      </span>
+                  </p>
+                  <p>
+                      <span>Hạn sử dụng：</span>
+                      <span>
+                        <input type="text" name="shelfLife" class="input_text" tabindex="1" onfocus="if(this.placeholder=='Hạn sử dụng'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='Hạn sử dụng';this.className ='input_text'}" accesskey="n" type="text" placeholder="Hạn sử dụng" size="25" autocomplete="off">
+                      </span>
+                  </p>
+                  <p>
+                      <span>Bảo quản：</span>
+                      <span>
+                        <input type="text" name="storageMethod" class="input_text" tabindex="1" onfocus="if(this.placeholder=='Bảo quản'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='Bảo quản';this.className ='input_text'}" accesskey="n" type="text" placeholder="Bảo quản" size="25" autocomplete="off">
+                      </span>
+                  </p>
+                  <p>
+                      <span>Nhà sản xuất：</span>
+                      <span>
+                        <input type="text" name="vendor" class="input_text" tabindex="1" onfocus="if(this.placeholder=='Nhà sản xuất'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='Nhà sản xuất';this.className ='input_text'}" accesskey="n" type="text" placeholder="Nhà sản xuất" size="25" autocomplete="off">
+                      </span>
+                  </p>
+                  <p>
+                      <span>Nơi sản xuất：</span>
+                      <span>
+                        <input type="text" name="placeOfProduction" class="input_text" tabindex="1" onfocus="if(this.placeholder=='Nơi sản xuất'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='Nơi sản xuất';this.className ='input_text'}" accesskey="n" type="text" placeholder="Nơi sản xuất" size="25" autocomplete="off">
+                      </span>
+                  </p>
+                  <p>
+                      <span>Tiêu chuẩn：</span>
+                      <span>
+                        <input type="text" name="executiveStandard" class="input_text" tabindex="1" onfocus="if(this.placeholder=='Tiêu chuẩn'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='Tiêu chuẩn';this.className ='input_text'}" accesskey="n" type="text" placeholder="Tiêu chuẩn" size="25" autocomplete="off" placeholder="">
+                      </span>
+                  </p>
+              </div>
+
+            <div class="headImg">
+                <div class="uploadImg">
+                    <input type="file" name="" value="Tải ảnh lên" id="file">
+                    +
+                    <!-- <img src="./images/head.jpg" alt=""> -->
+                    <img src="" alt="">
+                </div>
+            </div>
+          </div>
+          <input type="hidden" name="photo" id="photo" value=""/>
+          <div class="col text-center">
+            <button class="btn btn-default" style="background-color: green;color: white;">Thêm</button><br><br>
+
+        </div>
+        </form>
+    </div>
+    <!-- data-backdrop="false"  -->
+    <div class="modal fade bd-example-modal-sm"  id="myModal" role="dialog" data-backdrop="false"  aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <p class="text-center mb-0" style="height:42px;line-height:42px;margin:0;">
+                    <i class="fa fa-check-circle text-success mr-1" aria-hidden="true"></i>
+                    Vui lòng điền đầy đủ thông tin cần thiết cho sản phẩm!
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+<footer style="padding: 26px 0px;margin: 30px 0px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-6 footer-navigation"style="text-align:left;">
+                <h3><a href="#">AgriTrace</a></h3>
+                <p class="links"><a href="#">Food</a><strong> · </strong><a href="#">Products&nbsp;</a><strong> · </strong><a href="#">Traceability</a><strong> </strong></p>
+                <p class="company-name">Grooo International © 2021</p>
+            </div>
+            <div class="col-md-4 col-sm-6 footer-contacts">
+                <div><span class="fa fa-map-marker footer-contacts-icon"> </span>
+                    <p><span class="new-line-span">N09B2 Building, Dịch Vọng</span>Hà Nội, Việt Nam</p>
+                </div>
+                <div><i class="fa fa-phone footer-contacts-icon"></i>
+                    <p class="footer-center-info email text-left"> +84 123456789</p>
+                </div>
+                <div><i class="fa fa-envelope footer-contacts-icon"></i>
+                    <p> <a href="#" target="_blank">support@groootrace.com</a></p>
+                </div>
+            </div>
+            <div class="clearfix visible-sm-block"></div>
+            <div class="col-md-4 footer-about">
+                <h4>Về chúng tôi</h4>
+                <p>Thành lập từ năm 2021,....</p>
+                <div class="social-links social-icons"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-linkedin"></i></a><a href="#"><i class="fa fa-github"></i></a></div>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        // Upload image
+        $('#file').unbind('change').bind('change',function() {
+            event.stopPropagation();
+            uploadFile('img');
+            return;
+        });
+        // Profile picture
+        var artImg;
+        function uploadFile(type) {
+            event.stopPropagation();
+            let formData = new FormData();
+            if( type == "img"){
+                formData.append('file', $('#file')[0].files[0]);
+            }
+            $.ajax({
+                url: '/upload',
+                type: 'POST',
+                cache: false,
+                data: formData,
+                processData: false,
+                dataType: "json",
+                contentType: false
+            }).done(function (res) {
+                if (res.error == "0") {
+                    if( type == "img"){
+                        $('.uploadImg img').attr('src',res.result.path);
+                        $('#photo').val(res.result.path)
+                        return artImg = res.result.path;
+                    }
+                } else {
+                    alert("Upload failed！" + res.result.msg)
+                }
+            }).fail(function (res) { });
+        }
+
+        var inputs = $('input[type="text"]');
+        // Submit button
+        $('.btn').click(function() {
+            // If it is empty, an error prompt
+            for (var i = 0; i < inputs.length; i++) {
+                if (!($(inputs[i]).val())) {
+                    $(inputs[i]).addClass('redColor');
+                    $('#myModal').modal('show');
+                    setTimeout(function(){
+                        $("#myModal").modal("hide");
+                    },2000);
+                    return;
+                }
+            }
+
+            // Submit data after success
+            // $(location).attr('href','index.html');
+            $("form[name='addForm']").submit()
+        })
+    })
+</script>
+</html>

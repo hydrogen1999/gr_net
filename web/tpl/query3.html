@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Truy vấn</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="/static/css/reset.css" rel="stylesheet">
+    <!-- Bootstrap3.3.5 CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/query.css">
+  </head>
+  <body>
+    <div class="container">
+      <br><br><br>
+      <h2>Truy xuất thông tin sản phẩm</h2>
+      <div id="query">
+            <div class="left">
+              <form action="/query2" method="post" name="queryForm">
+                <p>
+                  Mã truy xuất：
+                  <input type="text" class="input_text" name="entityID" onfocus="if(this.placeholder=='Mã truy xuất'){this.placeholder='';}this.className ='input_text input_text_focus'" onblur="if(this.value==''){this.placeholder='Mã truy xuất';this.className ='input_text'}" value="" placeholder="Mã truy xuất" maxlength="18">
+                </p>
+                <p>
+                  <button type="button" name="button" class="btn">Xác nhận</button>
+                </p>
+                <a href="/index">Quay lại trang chủ</a>
+                <a href="/queryPage">Truy xuất theo tên</a>
+              </form>
+            </div>
+        <div class="right">
+          <p><b>Lưu ý</b></p>
+            <p>1. Nhấn để xem<a href="./help.html"> phạm vi truy xuất</a>.</p>
+            <p>2. Không được đăng tải lại kết quả truy xuất.</p>
+            <p>3. Điện thoại: (+84) 705443301 <br/> &nbsp;&nbsp;&nbsp; Email: <a href="mailto:nguyencongthinh1999@gmail.com">nguyencongthinh1999@gmail.com</a></p>
+        </div>
+      </div>
+      <!-- data-backdrop="false"  -->
+      <div class="modal fade bd-example-modal-sm"  id="myModal" role="dialog" data-backdrop="false"  aria-hidden="true">
+          <div class="modal-dialog modal-sm">
+              <div class="modal-content">
+                  <p class="text-center mb-0" style="height:42px;line-height:42px;margin:0;">
+                      <i class="fa fa-check-circle text-success mr-1" aria-hidden="true"></i>
+                      Vui lòng nhập đầy đủ thông tin!
+                  </p>
+              </div>
+          </div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      var inputs = $('input[type="text"]');
+      // Submit button
+      $('.btn').click(function() {
+        // a
+        for (var i = 0; i < inputs.length; i++) {
+          if (!($(inputs[i]).val())) {
+            $(inputs[i]).addClass('redColor');
+            $('#myModal').modal('show');
+            setTimeout(function(){
+              $("#myModal").modal("hide");
+            },2000);
+            return;
+          }
+        }
+        //$(location).attr('href','queryResult.html');
+        $("form[name='queryForm']").submit()
+      })
+    })
+  </script>
+</html>

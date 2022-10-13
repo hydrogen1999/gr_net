@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Kết quả truy xuất</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="/static/css/reset.css" rel="stylesheet">
+    <!-- Bootstrap3.3.5 CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/queryResult.css" rel="stylesheet">
+  </head>
+  <body>
+  <div class="container">
+      <br><br><br>
+      <div class="queryResule">
+          <h2>Kết quả truy vấn thông tin sản phẩm</h2>
+          {{if .History}}
+            <div id="tableDiv">
+                <table id="table" style="margin: 0 auto;">
+                    <tr>
+                        <td>Loại sản phẩm</td>
+                        <td>Tên</td>
+                        <td>Mã sản phẩm</td>
+                        <td>Mô tả</td>
+                        <td>Phương pháp xử lý</td>
+                        <td>Thông số</td>
+                        <td>Nguồn</td>
+                        <td>Nhà sản xuất</td>
+                        <td>Ghi chú</td>
+                        <td>Sửa đổi</td>
+                    </tr>
+                    {{range .Com.Historys}}
+                        <tr>
+                            <td>{{.Commodity.Type}}</td>
+                            <td>{{.Commodity.Name}}</td>
+                            <td>{{.Commodity.Primarykey}}</td>
+                            <td>{{.Commodity.Des}}</td>
+                            <td>{{.Commodity.Machining}}</td>
+                            <td>{{.Commodity.Specification}}</td>
+                            <td>{{.Commodity.Source}}</td>
+                            <td>{{.Commodity.Vendor}}</td>
+                            <td>{{.Commodity.Remarks}}</td>
+                            <td>{{.Commodity.Time}}</td>
+                        </tr>
+                    {{end}}
+                </table>
+            </div>
+          {{end}}
+          <div class="top">
+              <div class="left">
+                  <p>
+                      <span>Sản phẩm：</span>
+                      <span>{{.Com.Name}}</span>
+                  </p>
+                  <p>
+                      <span>Mã sản phẩm：</span>
+                      <span>{{.Com.Primarykey}}</span>
+                  </p>
+                  <p>
+                      <span>Thông số：</span>
+                      <span>{{.Com.Specification}}</span>
+                  </p>
+                  <p>
+                      <span>Mô tả：</span>
+                      <span>{{.Com.Des}}</span>
+                  </p>
+                  <p>
+                      <span>Nguồn：</span>
+                      <span>{{.Com.Source}}</span>
+                  </p>
+                  <p>
+                      <span>Ghi chú：</span>
+                      <span>{{.Com.Remarks}}</span>
+                  </p>
+              </div>
+              <div class="right">
+                  <p>
+                      <span>Hạn sử dụng：</span>
+                      <span>{{.Com.ShelfLife}}</span>
+                  </p>
+                  <p>
+                      <span>Bảo quản：</span>
+                      <span>{{.Com.StorageMethod}}</span>
+                  </p>
+                  <p>
+                      <span>Nhãn hiệu：</span>
+                      <span>{{.Com.Brand}}</span>
+                  </p>
+                  <p>
+                      <span>Nhà sản xuất：</span>
+                      <span>{{.Com.Vendor}}</span>
+                  </p>
+                  <p>
+                      <span>Nơi sản xuất：</span>
+                      <span>{{.Com.PlaceOfProduction}}</span>
+                  </p>
+
+                  <p>
+                      <span>Tiêu chuẩn：</span>
+                      <span>{{.Com.ExecutiveStandard}}</span>
+                  </p>
+              </div>
+              <div class="headImg">
+                  <img src="{{.Com.Photo}}" alt="">
+              </div>
+          </div>
+          <p>
+              {{if eq .CurrentUser.IsAdmin "T"}}
+                  <a href="/modifyPage?entityID={{.Com.Primarykey}}">Sửa đổi</a>
+              {{end}}
+              <a href="/index">Về trang chủ</a>
+          </p>
+          <div class="bottom">
+              <p><b>Lưu ý</b></p>
+              <p>1. Không sao chép dưới bất kỳ hình thức nào.</p>
+          </div>
+      </div>
+  </div>
+  </body>
+</html>
