@@ -1,0 +1,343 @@
+name: "grooo-network"
+version: 1.0.0
+client:
+  organization: Grooo1
+  logging:
+    level: info
+  cryptoconfig:
+    path: ${GOPATH}/src/github.com/hydrogen1999/grooo-network/crypto-config
+  credentialStore:
+    path: /tmp/thinhnc-store
+    cryptoStore:
+      path: /tmp/thinhnc-msp
+  BCCSP:
+    security:
+    enabled: true
+    default:
+      provider: "SW"
+    hashAlgorithm: "SHA2"
+    softVerify: true
+    level: 256
+  tlsCerts:
+    systemCertPool: false
+    client:
+      key:
+        path:
+      cert:
+        path:
+channels:
+  generalchannel:
+    peers:
+      peer0.grooo1.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer1.grooo1.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer2.grooo1.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer0.grooo2.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer1.grooo2.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer2.grooo2.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer0.grooo3.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer1.grooo3.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer2.grooo3.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+    policies:
+      queryChannelConfig:
+        minResponses: 1
+        maxTargets: 1
+        retryOpts:
+          attempts: 5
+          initialBackoff: 500ms
+          maxBackoff: 5s
+          backoffFactor: 2.0
+      discovery:
+        maxTargets: 2
+        retryOpts:
+          attempts: 4
+          initialBackoff: 500ms
+          maxBackoff: 5s
+          backoffFactor: 2.0
+      eventService:
+        resolverStrategy: PreferOrg
+        balancer: Random
+        blockHeightLagThreshold: 5
+        reconnectBlockHeightLagThreshold: 10
+        peerMonitorPeriod: 5s
+organizations:
+  Grooo1:
+    mspid: grooo1.com
+    cryptoPath: peerOrganizations/grooo1.com/users/{userName}@grooo1.com/msp
+    peers:
+      - peer0.grooo1.com
+      - peer1.grooo1.com
+      - peer2.grooo1.com
+    certificateAuthorities:
+      - ca.grooo1.com
+  Grooo2:
+    mspid: grooo2.com
+    cryptoPath: peerOrganizations/grooo2.com/users/{userName}@grooo2.com/msp
+    peers:
+      - peer0.grooo2.com
+      - peer1.grooo2.com
+      - peer2.grooo2.com
+    certificateAuthorities:
+      - ca.grooo2.com
+  Grooo3:
+    mspid: grooo3.com
+    cryptoPath: peerOrganizations/grooo3.com/users/{userName}@grooo3.com/msp
+    peers:
+      - peer0.grooo3.com
+      - peer1.grooo3.com
+      - peer2.grooo3.com
+    certificateAuthorities:
+      - ca.grooo3.com
+orderers:
+  orderer.grooo.com:
+    url: localhost:7050
+    grpcOptions:
+      ssl-target-name-override: orderer.grooo.com
+      keep-alive-time: 0s
+      keep-alive-timeout: 20s
+      keep-alive-permit: false
+      fail-fast: false
+      allow-insecure: false
+    tlsCACerts:
+      path: ${GOPATH}/src/github.com/hydrogen1999/grooo-network/crypto-config/ordererOrganizations/grooo.com/tlsca/tlsca.grooo.com-cert.pem
+
+peers:
+  peer0.grooo1.com:
+    url: localhost:7051
+    eventUrl: localhost:7053
+    grpcOptions:
+      ssl-target-name-override: peer0.grooo1.com
+      keep-alive-time: 0s
+      keep-alive-timeout: 20s
+      keep-alive-permit: false
+      fail-fast: false
+      allow-insecure: false
+    tlsCACerts:
+      path: ${GOPATH}/src/github.com/hydrogen1999/grooo-network/crypto-config/peerOrganizations/grooo1.com/tlsca/tlsca.grooo1.com-cert.pem
+  peer1.grooo1.com:
+    url: localhost:8051
+    eventUrl: localhost:8053
+    grpcOptions:
+      ssl-target-name-override: peer1.grooo1.com
+      keep-alive-time: 0s
+      keep-alive-timeout: 20s
+      keep-alive-permit: false
+      fail-fast: false
+      allow-insecure: false
+    tlsCACerts:
+      path: ${GOPATH}/src/github.com/hydrogen1999/grooo-network/crypto-config/peerOrganizations/grooo1.com/tlsca/tlsca.grooo1.com-cert.pem
+  peer2.grooo1.com:
+    url: localhost:9051
+    eventUrl: localhost:9053
+    grpcOptions:
+      ssl-target-name-override: peer2.grooo1.com
+      keep-alive-time: 0s
+      keep-alive-timeout: 20s
+      keep-alive-permit: false
+      fail-fast: false
+      allow-insecure: false
+    tlsCACerts:
+      path: ${GOPATH}/src/github.com/hydrogen1999/grooo-network/crypto-config/peerOrganizations/grooo1.com/tlsca/tlsca.grooo1.com-cert.pem
+  peer0.grooo2.com:
+    url: localhost:10051
+    eventUrl: localhost:10053
+    grpcOptions:
+      ssl-target-name-override: peer0.grooo2.com
+      keep-alive-time: 0s
+      keep-alive-timeout: 20s
+      keep-alive-permit: false
+      fail-fast: false
+      allow-insecure: false
+    tlsCACerts:
+      path: ${GOPATH}/src/github.com/hydrogen1999/grooo-network/crypto-config/peerOrganizations/grooo2.com/tlsca/tlsca.grooo2.com-cert.pem
+  peer1.grooo2.com:
+    url: localhost:11051
+    eventUrl: localhost:11053
+    grpcOptions:
+      ssl-target-name-override: peer1.grooo2.com
+      keep-alive-time: 0s
+      keep-alive-timeout: 20s
+      keep-alive-permit: false
+      fail-fast: false
+      allow-insecure: false
+    tlsCACerts:
+      path: ${GOPATH}/src/github.com/hydrogen1999/grooo-network/crypto-config/peerOrganizations/grooo2.com/tlsca/tlsca.grooo2.com-cert.pem
+  peer2.grooo2.com:
+    url: localhost:12051
+    eventUrl: localhost:12053
+    grpcOptions:
+      ssl-target-name-override: peer2.grooo2.com
+      keep-alive-time: 0s
+      keep-alive-timeout: 20s
+      keep-alive-permit: false
+      fail-fast: false
+      allow-insecure: false
+    tlsCACerts:
+      path: ${GOPATH}/src/github.com/hydrogen1999/grooo-network/crypto-config/peerOrganizations/grooo2.com/tlsca/tlsca.grooo2.com-cert.pem
+  peer0.grooo3.com:
+    url: localhost:13051
+    eventUrl: localhost:13053
+    grpcOptions:
+      ssl-target-name-override: peer0.grooo3.com
+      keep-alive-time: 0s
+      keep-alive-timeout: 20s
+      keep-alive-permit: false
+      fail-fast: false
+      allow-insecure: false
+    tlsCACerts:
+      path: ${GOPATH}/src/github.com/hydrogen1999/grooo-network/crypto-config/peerOrganizations/grooo3.com/tlsca/tlsca.grooo3.com-cert.pem
+  peer1.grooo3.com:
+    url: localhost:14051
+    eventUrl: localhost:14053
+    grpcOptions:
+      ssl-target-name-override: peer1.grooo3.com
+      keep-alive-time: 0s
+      keep-alive-timeout: 20s
+      keep-alive-permit: false
+      fail-fast: false
+      allow-insecure: false
+    tlsCACerts:
+      path: ${GOPATH}/src/github.com/hydrogen1999/grooo-network/crypto-config/peerOrganizations/grooo3.com/tlsca/tlsca.grooo3.com-cert.pem
+  peer2.grooo3.com:
+    url: localhost:15051
+    eventUrl: localhost:15053
+    grpcOptions:
+      ssl-target-name-override: peer2.grooo3.com
+      keep-alive-time: 0s
+      keep-alive-timeout: 20s
+      keep-alive-permit: false
+      fail-fast: false
+      allow-insecure: false
+    tlsCACerts:
+      path: ${GOPATH}/src/github.com/hydrogen1999/grooo-network/crypto-config/peerOrganizations/grooo3.com/tlsca/tlsca.grooo3.com-cert.pem
+
+certificateAuthorities:
+  ca.grooo1.com:
+    url: https://localhost:7054
+    tlsCACerts:
+      path: ${GOPATH}/src/github.com/hydrogen1999/grooo-network/crypto-config/peerOrganizations/grooo1.com/ca/ca.grooo1.com-cert.pem
+    registrar:
+      enrollId: admin
+      enrollSecret: adminpw
+    caName: ca.grooo1.com
+  ca.grooo2.com:
+    url: https://localhost:8054
+    tlsCACerts:
+      path: ${GOPATH}/src/github.com/hydrogen1999/grooo-network/crypto-config/peerOrganizations/grooo2.com/ca/ca.grooo2.com-cert.pem
+    registrar:
+      enrollId: admin
+      enrollSecret: adminpw
+    caName: ca.grooo2.com
+  ca.grooo3.com:
+    url: https://localhost:9054
+    tlsCACerts:
+      path: ${GOPATH}/src/github.com/hydrogen1999/grooo-network/crypto-config/peerOrganizations/grooo3.com/ca/ca.grooo3.com-cert.pem
+    registrar:
+      enrollId: admin
+      enrollSecret: adminpw
+    caName: ca.grooo3.com
+entityMatchers:
+  peer:
+    - pattern: (\w*)peer0.grooo1.com(\w*)
+      urlSubstitutionExp: localhost:7051
+      eventUrlSubstitutionExp: localhost:7053
+      sslTargetOverrideUrlSubstitutionExp: peer0.grooo1.com
+      mappedHost: peer0.grooo1.com
+
+    - pattern: (\w*)peer1.grooo1.com(\w*)
+      urlSubstitutionExp: localhost:8051
+      eventUrlSubstitutionExp: localhost:8053
+      sslTargetOverrideUrlSubstitutionExp: peer1.grooo1.com
+      mappedHost: peer1.grooo1.com
+
+    - pattern: (\w*)peer2.grooo1.com(\w*)
+      urlSubstitutionExp: localhost:9051
+      eventUrlSubstitutionExp: localhost:9053
+      sslTargetOverrideUrlSubstitutionExp: peer2.grooo1.com
+      mappedHost: peer2.grooo1.com
+    
+    - pattern: (\w*)peer0.grooo2.com(\w*)
+      urlSubstitutionExp: localhost:10051
+      eventUrlSubstitutionExp: localhost:10053
+      sslTargetOverrideUrlSubstitutionExp: peer0.grooo2.com
+      mappedHost: peer0.grooo2.com
+
+    - pattern: (\w*)peer1.grooo2.com(\w*)
+      urlSubstitutionExp: localhost:11051
+      eventUrlSubstitutionExp: localhost:11053
+      sslTargetOverrideUrlSubstitutionExp: peer1.grooo2.com
+      mappedHost: peer1.grooo2.com
+      
+    - pattern: (\w*)peer2.grooo2.com(\w*)
+      urlSubstitutionExp: localhost:12051
+      eventUrlSubstitutionExp: localhost:12053
+      sslTargetOverrideUrlSubstitutionExp: peer2.grooo2.com
+      mappedHost: peer2.grooo2.com
+
+    - pattern: (\w*)peer0.grooo3.com(\w*)
+      urlSubstitutionExp: localhost:13051
+      eventUrlSubstitutionExp: localhost:13053
+      sslTargetOverrideUrlSubstitutionExp: peer0.grooo3.com
+      mappedHost: peer0.grooo3.com
+
+    - pattern: (\w*)peer1.grooo3.com(\w*)
+      urlSubstitutionExp: localhost:14051
+      eventUrlSubstitutionExp: localhost:14053
+      sslTargetOverrideUrlSubstitutionExp: peer1.grooo3.com
+      mappedHost: peer1.grooo3.com
+      
+    - pattern: (\w*)peer2.grooo3.com(\w*)
+      urlSubstitutionExp: localhost:15051
+      eventUrlSubstitutionExp: localhost:15053
+      sslTargetOverrideUrlSubstitutionExp: peer2.grooo3.com
+      mappedHost: peer2.grooo3.com
+  orderer:
+    - pattern: (\w*)orderer.grooo.com(\w*)
+      urlSubstitutionExp: localhost:7050
+      sslTargetOverrideUrlSubstitutionExp: orderer.grooo.com
+      mappedHost: orderer.grooo.com
+  certificateAuthorities:
+    - pattern: (\w*)ca.grooo1.com(\w*)
+      urlSubstitutionExp: http://localhost:7054
+      mappedHost: ca.grooo1.com
+    - pattern: (\w*)ca.grooo2.com(\w*)
+      urlSubstitutionExp: http://localhost:8054
+      mappedHost: ca.grooo2.com
+    - pattern: (\w*)ca.grooo3.com(\w*)
+      urlSubstitutionExp: http://localhost:9054
+      mappedHost: ca.grooo3.com
