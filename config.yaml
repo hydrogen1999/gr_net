@@ -12,12 +12,12 @@ client:
       path: /tmp/thinhnc-msp
   BCCSP:
     security:
-    enabled: true
-    default:
-      provider: "SW"
-    hashAlgorithm: "SHA2"
-    softVerify: true
-    level: 256
+      enabled: true
+      default:
+        provider: "SW"
+      hashAlgorithm: "SHA2"
+      softVerify: true
+      level: 256
   tlsCerts:
     systemCertPool: false
     client:
@@ -97,7 +97,7 @@ channels:
         peerMonitorPeriod: 5s
 organizations:
   Grooo1:
-    mspid: grooo1.com
+    mspid: Grooo1MSP
     cryptoPath: peerOrganizations/grooo1.com/users/{userName}@grooo1.com/msp
     peers:
       - peer0.grooo1.com
@@ -106,7 +106,7 @@ organizations:
     certificateAuthorities:
       - ca.grooo1.com
   Grooo2:
-    mspid: grooo2.com
+    mspid: Grooo2MSP
     cryptoPath: peerOrganizations/grooo2.com/users/{userName}@grooo2.com/msp
     peers:
       - peer0.grooo2.com
@@ -115,7 +115,7 @@ organizations:
     certificateAuthorities:
       - ca.grooo2.com
   Grooo3:
-    mspid: grooo3.com
+    mspid: Grooo3MSP
     cryptoPath: peerOrganizations/grooo3.com/users/{userName}@grooo3.com/msp
     peers:
       - peer0.grooo3.com
