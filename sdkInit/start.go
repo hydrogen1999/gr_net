@@ -1,23 +1,21 @@
 package sdkInit
 
 import (
-	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
-	"github.com/hyperledger/fabric-sdk-go/pkg/core/config"
 	"fmt"
-	"github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt"
+
 	mspclient "github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
-	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp"
+	"github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
-    
+	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp"
+	"github.com/hyperledger/fabric-sdk-go/pkg/core/config"
+	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
+
+	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fab/ccpackager/gopackager"
 	"github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/common/cauthdsl"
-	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
-
 )
 
-
-const ChaincodeVersion  = "1.0"
-
+const ChaincodeVersion = "1.0"
 
 func SetupSDK(ConfigFile string, initialized bool) (*fabsdk.FabricSDK, error) {
 
@@ -61,7 +59,7 @@ func CreateChannel(sdk *fabsdk.FabricSDK, info *InitInfo) error {
 	}
 
 	// SaveChannelRequest holds parameters for save channel request
-	channelReq := resmgmt.SaveChannelRequest{ChannelID:info.ChannelID, ChannelConfigPath:info.ChannelConfig, SigningIdentities:[]msp.SigningIdentity{adminIdentity}}
+	channelReq := resmgmt.SaveChannelRequest{ChannelID: info.ChannelID, ChannelConfigPath: info.ChannelConfig, SigningIdentities: []msp.SigningIdentity{adminIdentity}}
 	// save channel response with transaction ID
 	_, err = resMgmtClient.SaveChannel(channelReq, resmgmt.WithRetry(retry.DefaultResMgmtOpts), resmgmt.WithOrdererEndpoint(info.OrdererOrgName))
 	if err != nil {
@@ -106,7 +104,7 @@ func InstallAndInstantiateCC(sdk *fabsdk.FabricSDK, info *InitInfo) (*channel.Cl
 	fmt.Println("Start instantiating chaincode......")
 
 	//  returns a policy that requires one valid
-	ccPolicy := cauthdsl.SignedByAnyMember([]string{"org1.kevin.kongyixueyuan.com"})
+	ccPolicy := cauthdsl.SignedByAnyMember([]string{"grooo1.com"})
 
 	instantiateCCReq := resmgmt.InstantiateCCRequest{Name: info.ChaincodeID, Path: info.ChaincodePath, Version: ChaincodeVersion, Args: [][]byte{[]byte("init")}, Policy: ccPolicy}
 	// instantiates chaincode with optional custom options (specific peers, filtered peers, timeout). If peer(s) are not specified

@@ -1,7 +1,6 @@
 /*
-
- *Author:ThinhNguyenCong
- *2020-11-26
+*Author:ThinhNguyenCong
+*2020-11-26
  */
 package main
 
@@ -10,14 +9,14 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/hyperledger/fabric/core/chaincode/shim"
-	"github.com/hyperledger/fabric/protos/peer"
+	"github.com/hyperledger/fabric-chaincode-go/shim"
+	"github.com/hyperledger/fabric/core/peer"
 )
 
 const DOC_TYPE = "comObj"
 const DOC_COM_TYPE = "comObj"
 
-//Put commodity
+// Put commodity
 func PutCom(stub shim.ChaincodeStubInterface, com Commodity) ([]byte, bool) {
 
 	com.ObjectType = DOC_COM_TYPE
@@ -35,7 +34,7 @@ func PutCom(stub shim.ChaincodeStubInterface, com Commodity) ([]byte, bool) {
 	return b, true
 }
 
-//Get commodity information
+// Get commodity information
 func GetComInfo(stub shim.ChaincodeStubInterface, primarykey string) (Commodity, bool) {
 	var com Commodity
 
@@ -119,7 +118,7 @@ func (t *EducationChaincode) addCom(stub shim.ChaincodeStubInterface, args []str
 	return shim.Success([]byte("Information added successfully!"))
 }
 
-//Set aside
+// Set aside
 func (t *EducationChaincode) queryComByCertNoAndName(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
 	if len(args) != 2 {

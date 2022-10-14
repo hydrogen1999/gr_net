@@ -95,3 +95,6 @@ peer chaincode instantiate -o orderer.grooo.com:7050 --tls --cafile ./opt/gopath
 CORE_PEER_ADDRESS=peer0.grooo1.com:7051 peer chaincode instantiate -o orderer.grooo.com:7050 -C generalchannel -n mycc -p ./chaincode/ -v 1.0 -c '{"Args":["init","a","100","b","200"]}'
 
 peer chaincode instantiate -o orderer.grooo.com:7050 -C generalchannel -n mycc -v 1.0 -c '{"Args":[]}' -P "OR ('Grooo1.member','Grooo2.member')"
+
+
+rm ~/.cache/go-build/ -r
